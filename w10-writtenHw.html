@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <ol>
+      <li>
+        API is how apps/services 'talk' to each other over a network. REST
+        (representational state transfer) refers to a design an API must follow
+        to be able to interact with others. API's are considered RESTFUL when:
+      </li>
+      <ul>
+        <li>
+          There is an exchange of request and response from client to server
+        </li>
+        <li>
+          The data exchange must be able to be manipulated using HTTP Requests
+          (GET, POST, PUT, DELETE) which refers to CRUD:
+        </li>
+        <ul>
+          <li>Create</li>
+          <li>Read</li>
+          <li>Update</li>
+          <li>Delete</li>
+        </ul>
+      </ul>
+      <li>
+        Node.js is a runtime environment that let's us use JavaScript (a website
+        script language) on the backend or the server. It is often used for
+        building server-side apps because it is single threaded and of it's
+        asynchronous nature. This makes node.js very fast as it does not have to
+        stop and wait for a task to finish before going to the next one, instead
+        it puts time intensive tasks on the side and picks it back up when it is
+        ready.
+      </li>
+      <li>
+        Express.js is unopinionated, which makes it very flexible as it does not
+        restrict users to conform to a predefined structure. On top of this,
+        Express comes with useful features for creating web servers such as:
+        <ul>
+          <li>Routing</li>
+          <li>Middleware</li>
+          <li>Templating</li>
+          <li>Static File serving</li>
+        </ul>
+      </li>
+      <li>
+        Middleware in Express are essentially functions that can be executed at
+        different points of the request-response cycle. It is used for various
+        tasks, such as modifying the request or response object, it can be used
+        for authentication, logging, CORS (Cross-Origin Resource Sharing). They
+        are normally used by being passed as an argument in app.use()
+      </li>
+      <li>
+        <ul>
+          <li>
+            GET is the verb for requesting data form a server, this is read
+            only. In the context of RESTful API, GET is the only one that
+            renders a 'view' back to the clients. This refers to Index, New,
+            Edit, Show in our 'INDUCES Actions'.
+          </li>
+          <li>
+            POST sends new data to the server. POST requests 'create' new data
+            entries in RESTful routing
+          </li>
+          <li>
+            PUT is a method for updating an specific existing data. Normally
+            used for changing the whole data itself. In RESTful API this
+            corresponds to the Update.
+            <em
+              ><span
+                >(It can create the data if the data was not found, can we use
+                this intentionally or should it be avoided?)</span
+              >></em
+            >
+          </li>
+          <li>
+            PATCH is similar to PUT but only requires partial data, and only
+            changes the data it was sent with as opposed to the whole data.
+          </li>
+          <li>
+            DELETE is used for deleting a specific data. This corresponds to
+            'destroy' in RESTful API.
+          </li>
+        </ul>
+      </li>
+      <li>
+        To handle parameters in the URL, we can handle them in our routes by
+        placing placeholders. <br />
+        app.get('/username/:photos', (req, res) => {} ) <br />
+        In this example, we used :photos as placeholder for the parameter in our
+        URL, we can capture it's value by using <em>req.params.photo</em>. Once
+        we have that we can modify our logic accordingly.
+      </li>
+      <li>
+        Some of the approaches when it comes to error handling in express.js are
+        :
+        <ul>
+          <li>
+            We can create our own error handling middleware/function and pass it
+            four args app.use((err, req, res, next) => {} ).
+            <em>This must be defines last, AFTER all the other middleware</em>
+          </li>
+          <li>
+            Express also comes with it's own error handling both for sync and
+            async code. Errors from sync code are process right there and then
+            by express if it is 'thrown'. We must 'catch' errors from async code
+            and sent it to express to be processed
+          </li>
+        </ul>
+      </li>
+      <li>
+        <table>
+          <tr>
+            <th>Routes</th>
+            <th>HTTP Verb</th>
+            <th>Action</th>
+            <th>Purpose</th>
+          </tr>
+
+          <tr>
+            <td>/items</td>
+            <td>GET</td>
+            <td>Index</td>
+            <td>Display list of items</td>
+          </tr>
+
+          <tr>
+            <td>/items/new</td>
+            <td>GET</td>
+            <td>New</td>
+            <td>Display page to create new item</td>
+          </tr>
+
+          <tr>
+            <td>/items/:id</td>
+            <td>DELETE</td>
+            <td>Destroy</td>
+            <td>Delete a specific item</td>
+          </tr>
+
+          <tr>
+            <td>/items/:id</td>
+            <td>PUT/PATCH</td>
+            <td>Update</td>
+            <td>Update a specific item</td>
+          </tr>
+
+          <tr>
+            <td>/items</td>
+            <td>POST</td>
+            <td>Create</td>
+            <td>Add a new item</td>
+          </tr>
+
+          <tr>
+            <td>/items/:id/Edit</td>
+            <td>GET</td>
+            <td>Edit</td>
+            <td>Display form to Edit</td>
+          </tr>
+
+          <tr>
+            <td>/items/:id</td>
+            <td>GET</td>
+            <td>Show</td>
+            <td>Display a specific item</td>
+          </tr>
+        </table>
+      </li>
+      <li>
+        To parse incoming body requests when using express.js we can make use of
+        express' built in middleware. One of which is .json() , which turns json
+        data sent to the server available for us through req.body (body property
+        of the request object)
+      </li>
+      <li>
+        To implement testing with a RESTful API built with NODEjs and Express,
+        we can use jest and supertest. Jest is a library/ module used for
+        testing and Supertest is used to help us send http requests to test the
+        endpoints of our APIs. <br />
+        <code>
+          const request = require('supertest') <br />
+          const { app, server } = require('../app') <br />
+          <br />
+
+          describe('Test the root path', () => { <br />
+          ..test('It should respond with "Hello World!"', async () => { <br />
+          ....const response = await request(app).get('/'); <br />
+          ....expect(response.text).toBe('Hello World!'); <br />
+          ....expect(response.statusCode).toBe(200); }); <br />
+          });
+          <br />
+          <br />
+
+          afterAll(done => { <br />// Closing the connection allows Jest to exit
+          successfully. <br />
+          ..server.close() <br />
+          ..done() <br />
+          })
+        </code>
+
+        This code snippet shows how one might test for the root path ('/') of
+        their application. describe() contains the description of the test being
+        done, followed by a callback function to test() which tells us what we
+        are testing for, and inside contains expected values/outputs.
+      </li>
+    </ol>
+  </body>
+</html>

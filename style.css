@@ -1,0 +1,22 @@
+* {
+    line-height: 2.5;
+    /* font-size: 1.1rem  ; */
+}
+
+ol > li {
+    margin: 1rem;
+}
+
+table {
+    text-align: left;
+    width: 80%;
+}
+
+table tr:nth-child(odd) {
+    background-color: lightgray;
+}
+
+code {
+    background-color: whitesmoke;
+    color: orangered;
+}
